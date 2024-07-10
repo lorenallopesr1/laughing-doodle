@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+        .heart {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: relative;
+            animation: beat 1s infinite;
+        }
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart::before {
+            top: -50px;
+            left: 0;
+        }
+        .heart::after {
+            left: 50px;
+            top: 0;
+        }
+        @keyframes beat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        .message {
+            margin: 20px 0;
+            font-size: 24px;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .button.no {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="heart"></div>
+    <div class="message">Aceita sair comigo?</div>
+    <div class="buttons">
+        <button class="button yes" onclick="sayYes()">Sim</button>
+        <button class="button no" onmouseover="runAway()">Não</button>
+    </div>
+
+    <script>
+        function sayYes() {
+            document.body.innerHTML = `<div style="text-align: center;">
+                                            <h1>Te busco às 19:00 ❤️</h1>
+                                            <div class="fireworks"></div>
+                                        </div>`;
+            createFireworks();
+        }
+
+        function runAway() {
+            const noButton = document.querySelector('.button.no');
+            const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        }
+
+        function createFireworks() {
+            const container = document.querySelector('.fireworks');
+            for (let i = 0; i < 50; i++) {
+                const firework = document.createElement('div');
+                firework.style.position = 'absolute';
+                firework.style.width = '4px';
+                firework.style.height = '20px';
+                firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                firework.style.transform = `rotate(${Math.random() * 360}deg)`;
+                firework.style.top = `${Math.random() * 100}vh`;
+                firework.style.left = `${Math.random() * 100}vw`;
+                firework.style.animation = 'explode 1s forwards';
+                container.appendChild(firework);
+            }
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scaleY(0.1);
+                opacity: 0;
+            }
+        }
+    </script>
+</body>
+</html>
